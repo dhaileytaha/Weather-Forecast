@@ -1,0 +1,144 @@
+<html ng-app="myModule">
+<head>
+	<title></title>
+       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="assets/css/weather.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+<body>
+    <div ng-controller="myController" ng-init="onInit()">
+        <div class="topBar"></div>
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+                <div><img src="http://www.lakedistrictweatherline.co.uk/__data/assets/image/0009/652275/logo2.png?v=0.1.11" height="100px" width="250px"></div>
+                <div class=""></div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10 main">
+                <div class="shadow"></div>
+                <div class="col-sm-1">
+
+                </div>
+                <div class="col-sm-11">
+                    <h3 class="heading">All you need to know about Weather Forecast</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mi et leo tristique <br>tincidunt ac nec est. Aenean volutpat mauris vitae erat ultricies varius. Taha Dhailey</p>
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10 leftForm">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#home"><i class="glyphicon glyphicon-asterisk"></i> Weather</a></li>
+                        <li><a data-toggle="tab" href="#menu1"><i class="glyphicon glyphicon-search"></i> Search</a></li>
+                    </ul>
+                    <div class="tab-content" ng-cloak>
+                        <div id="home" class="tab-pane fade in active">
+                            <h3>Your Location : <span>{{  data.city.name="" ? 'City Name Not Found' : data.city.name }}</span></h3>
+                            <table>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Temperature</th>
+                                    <th>Humidity</th>
+                                    <th>Weather</th>
+                                    <th>WindSpeed</th>
+                                </tr>
+                                <tr ng-repeat="d in data.list">
+                                    <td>{{ d.dt_txt }}</td>
+                                    <td>{{ d.main.temp - 273 +' C'}}</td>
+                                    <td>{{ d.main.humidity+'%' }}</td>
+                                    <td ng-repeat="w in d.weather">{{ w.description }}</td>
+                                    <td>{{ d.wind.speed+' m/s' }}</td>
+                                </tr>
+                            </table>
+                            </p>
+                        </div>
+                        <div id="menu1" class="tab-pane fade">
+                            <div id="weather-background" class="default-weather">
+                                <canvas id="rain-canvas"></canvas>
+                                <canvas id="cloud-canvas"></canvas>
+                                <canvas id="weather-canvas"></canvas>
+                                <canvas id="time-canvas"></canvas>
+                                <canvas id="lightning-canvas"></canvas>
+                                <div class="page-wrap">
+                                    <header class="search-bar">
+                                        <p class="search-text"><span class="search-location-text" style="font-size:20px">What's the weather like in <input id="search-location-input" class="search-location-input" type="text" placeholder="City"> ?</span></p>
+                                        <div class="search-location-button-group">
+                                            <button id="search-location-button" class="fa fa-search search-location-button search-button"></button>
+                                            <!--
+                                            -->
+                                            <!-- <button id="geo-button" class="geo-button fa fa-location-arrow search-button"></button> -->
+                                        </div>
+                                    </header>
+
+                                    <div id="geo-error-message" class="geo-error-message hide"><button id='close-error' class='fa fa-times close-error'></button>Uh oh! It looks like we can't find your location. Please type your city into the search box above!</div>
+                                    <div id="front-page-description" class="front-page-description middle">
+                                        <h1>Weather Forecast</h1>
+                                        <h2>Search Any City Weather</h2>
+                                    </div>
+                                    <div id="weather" class="weather middle hide">
+                                        <br><br>
+                                        <div class="location" id="location"></div>
+                                        <div class="weather-container">
+                                            <div id="temperature-info" class="temperature-info">
+                                                <div class="temperature" id="temperature"></div>
+                                                <div class="weather-description" id="weather-description"></div>
+                                            </div>
+                                            <div class="weather-box">
+                                                <ul class="weather-info" id="weather-info">
+                                                    <li class="weather-item humidity">Humidity: <span id="humidity"></span>%</li>
+                                                    <!--
+                                                    -->
+                                                    <li class="weather-item wind">Wind: <span id="wind-direction"></span> <span id="wind"></span> <span id="speed-unit"></span></li>
+                                                </ul>
+                                            </div>
+                                            <div class="temp-change">
+                                                <button id="celsius" class="temp-change-button celsius">&deg;C</button><button id="fahrenheit" class="temp-change-button fahrenheit">&deg;F</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+                <br>
+                <div class="bottom"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mi et leo tristique tincidunt ac nec est. Aenean volutpat mauris vitae erat ultricies varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae mi et leo tristique tincidunt ac nec est. Aenean volutpat mauris vitae erat ultricies varius. Aenean volutpat mauris vitae erat ultricies varius. Lorem ipsum dolor sit amet</p></div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+
+        <script src="assets/js/script.js"></script>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="assets/js/weather.js"></script>
+    </div>
+
+ </body>
+</html>
